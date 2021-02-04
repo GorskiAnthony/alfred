@@ -23,46 +23,18 @@ module.exports = class Btc extends (
 				const acct = results[0].data;
 				const stats = results[1].data;
 
-				if (stats.chess_rapid === undefined && stats.chess_blitz) {
-					message.channel.send(
-						`Pour le joueur **${acct.username}** voici ses stats
-	
-	> Partie blitz. 
-	- Gagnant : ${stats.chess_blitz.record.win}.
-	- Perdant : ${stats.chess_blitz.record.loss}.
-	- Null : ${stats.chess_blitz.record.draw}`
-					);
-				} else if (
-					stats.chess_blitz === undefined &&
-					stats.chess_rapid
-				) {
-					message.channel.send(
-						`Pour le joueur **${acct.username}** voici ses stats
-	
-	> Partie rapide.
-	- Gagnant : ${stats.chess_rapid.record.win}.
-	- Perdant : ${stats.chess_rapid.record.loss}.
-	- Null : ${stats.chess_rapid.record.draw}`
-					);
-				} else if (stats.chess_rapid && stats.chess_blitz) {
-					message.channel.send(
-						`Pour le joueur **${acct.username}** voici ses stats
-	
-	> Partie rapide.
-	- Gagnant : ${stats.chess_rapid.record.win}.
-	- Perdant : ${stats.chess_rapid.record.loss}.
-	- Null : ${stats.chess_rapid.record.draw}
-	
-	> Partie blitz. 
-	- Gagnant : ${stats.chess_blitz.record.win}.
-	- Perdant : ${stats.chess_blitz.record.loss}.
-	- Null : ${stats.chess_blitz.record.draw}`
-					);
-				} else {
-					message.reply(
-						`${args[1]} ce joueur n'a pas fait de partie publique`
-					);
-				}
+				result.map((word) => {
+					console.log(word);
+				});
+
+				const pattern = "chess_";
+				const result = Object.keys(stats).filter((str) => {
+					return str.includes(pattern);
+				});
+
+				console.log(result);
+				message.channel.send("coco");
+				console.log(messagePush);
 			})
 			.catch(() => {
 				message.reply(`Désolé, je ne connais pas le joueur ${args[1]}`);
