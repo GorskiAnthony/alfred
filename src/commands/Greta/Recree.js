@@ -19,7 +19,7 @@ module.exports = class Recree extends (
 		/** Vérifie si la personne peut envoyer le message  */
 
 		let isAdmin = message.guild.roles.cache.find((role) =>
-			role.name === "Formateur"
+			role.name.toLowerCase() === "formateur"
 				? true
 				: role.name === "Admin"
 				? true
@@ -44,6 +44,7 @@ module.exports = class Recree extends (
 		}
 
 		if (isAdmin) {
+			console.log("je suis admin");
 			/** J'envoi le 1er message */
 			message.channel.send(`
         🚀\r\n🚀🚀\r\n🚀🚀🚀\r\nC'est la récré les ami(e)s ! Il est ${dateStart.getHours()}h${
@@ -55,15 +56,7 @@ module.exports = class Recree extends (
 			setTimeout(() => {
 				message.channel.send(`
         🚀\r\n🚀🚀\r\n🚀🚀🚀\r\n Hey ${roleName}, la récré est fini ! \r\n🚀🚀🚀\r\n🚀🚀\r\n🚀`);
-			}, tenMinutes);
-
-			/** Je supprime mon message pour ne pas spam */
-			message
-				.delete()
-				.then((msg) =>
-					console.log(`Deleted message from ${msg.author.username}`)
-				)
-				.catch(console.error);
+			}, fiveSeconds);
 		} else {
 			message.reply(
 				`Tu n'as pas le droit d'envoyer cette commande :smile:`
