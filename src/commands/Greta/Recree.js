@@ -19,7 +19,7 @@ module.exports = class Recree extends (
 		/** Vérifie si la personne peut envoyer le message  */
 
 		let isAdmin = message.guild.roles.cache.find((role) =>
-			role.name.toLowerCase() === "formateur"
+			role.name === "Formateur"
 				? true
 				: role.name === "Admin"
 				? true
@@ -27,6 +27,8 @@ module.exports = class Recree extends (
 				? true
 				: false
 		);
+
+		console.log(isAdmin);
 		/** Get le role pour les pings */
 		let roleName = message.guild.roles.cache.find((role) =>
 			role.name === "Etudiants"
@@ -35,6 +37,7 @@ module.exports = class Recree extends (
 				? "Etudiant"
 				: "everyone"
 		);
+		console.log(roleName);
 
 		/** Je gère la date > 60 min */
 		if (dateStart.getMinutes() + 10 >= 60) {
@@ -56,7 +59,7 @@ module.exports = class Recree extends (
 			setTimeout(() => {
 				message.channel.send(`
         🚀\r\n🚀🚀\r\n🚀🚀🚀\r\n Hey ${roleName}, la récré est fini ! \r\n🚀🚀🚀\r\n🚀🚀\r\n🚀`);
-			}, fiveSeconds);
+			}, tenMinutes);
 		} else {
 			message.reply(
 				`Tu n'as pas le droit d'envoyer cette commande :smile:`

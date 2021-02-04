@@ -2,11 +2,9 @@ const Command = require("../command");
 const axios = require("axios");
 
 getUserAccount = (user) => {
-	console.log(`https://api.chess.com/pub/player/${user}`);
 	return axios.get(`https://api.chess.com/pub/player/${user}`);
 };
 getUserStats = (user) => {
-	console.log(`https://api.chess.com/pub/player/${user}/stats`);
 	return axios.get(`https://api.chess.com/pub/player/${user}/stats`);
 };
 
