@@ -22,50 +22,36 @@ module.exports = class Btc extends (
 			.then(function (results) {
 				const acct = results[0].data;
 				const stats = results[1].data;
+				const finalResult = [];
 
-				if (stats.chess_rapid === undefined && stats.chess_blitz) {
-					message.channel.send(
-						`Pour le joueur **${acct.username}** voici ses stats
-	
-	> Partie blitz. 
-	- Gagnant : ${stats.chess_blitz.record.win}.
-	- Perdant : ${stats.chess_blitz.record.loss}.
-	- Null : ${stats.chess_blitz.record.draw}`
-					);
-				} else if (
-					stats.chess_blitz === undefined &&
-					stats.chess_rapid
-				) {
-					message.channel.send(
-						`Pour le joueur **${acct.username}** voici ses stats
-	
-	> Partie rapide.
-	- Gagnant : ${stats.chess_rapid.record.win}.
-	- Perdant : ${stats.chess_rapid.record.loss}.
-	- Null : ${stats.chess_rapid.record.draw}`
-					);
-				} else if (stats.chess_rapid && stats.chess_blitz) {
-					message.channel.send(
-						`Pour le joueur **${acct.username}** voici ses stats
-	
-	> Partie rapide.
-	- Gagnant : ${stats.chess_rapid.record.win}.
-	- Perdant : ${stats.chess_rapid.record.loss}.
-	- Null : ${stats.chess_rapid.record.draw}
-	
-	> Partie blitz. 
-	- Gagnant : ${stats.chess_blitz.record.win}.
-	- Perdant : ${stats.chess_blitz.record.loss}.
-	- Null : ${stats.chess_blitz.record.draw}`
-					);
-				} else {
-					message.reply(
-						`${args[1]} ce joueur n'a pas fait de partie publique`
-					);
+				/** l'api donne pour chaque partie le prefix chess_ */
+				const pattern = "chess_";
+				/** Je filtre le pattern et je récupère les infos  */
+				const result = Object.keys(stats).filter((str) => {
+					return str.includes(pattern);
+				});
+
+				/** boucle qui permet de push les infos des parties */
+				for (let i = 0; i < result.length; i++) {
+					let message = `> Partie ${result[i].split("_")[1]} 
+- Gagnant = ${stats[result[i]].record.win}
+- Perdant = ${stats[result[i]].record.loss}
+- Null = ${stats[result[i]].record.draw} \r\n`;
+					/** Je push chaque message dans mon array finalResult */
+					finalResult.push(message);
 				}
+
+				message.channel.send(
+					`Voici les stats pour le joueur **${
+						acct.username
+					}** (joueur ${acct.status}) \r\n${finalResult.join(" ")}`
+				);
 			})
-			.catch(() => {
-				message.reply(`Désolé, je ne connais pas le joueur ${args[1]}`);
+			.catch((err) => {
+				console.log(err);
+				message.reply(
+					`Désolé, je ne connais pas le joueur **${args[1]}**`
+				);
 			});
 	}
 };
