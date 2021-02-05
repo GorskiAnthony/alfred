@@ -8,7 +8,7 @@ getUserStats = (user) => {
 	return axios.get(`https://api.chess.com/pub/player/${user}/stats`);
 };
 
-module.exports = class Btc extends (
+module.exports = class Chess extends (
 	Command
 ) {
 	static match(message) {

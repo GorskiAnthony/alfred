@@ -1,7 +1,7 @@
 const Command = require("./command");
 const axios = require("axios");
 
-module.exports = class Btc extends (
+module.exports = class Covid extends (
 	Command
 ) {
 	static match(message) {
