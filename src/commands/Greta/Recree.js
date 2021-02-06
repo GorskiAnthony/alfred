@@ -1,8 +1,6 @@
 const Command = require("../command");
 
-module.exports = class Recree extends (
-	Command
-) {
+module.exports = class Recree extends Command {
 	static match(message) {
 		return message.content.startsWith("!recree");
 	}
@@ -46,7 +44,7 @@ module.exports = class Recree extends (
 			setTimeout(() => {
 				message.channel.send(`
         🚀\r\n🚀🚀\r\n🚀🚀🚀\r\n Hey ${roleStudent}, la récré est fini ! \r\n🚀🚀🚀\r\n🚀🚀\r\n🚀`);
-			}, fiveSeconds);
+			}, tenMinutes);
 		} else {
 			message.reply(
 				`Hey, tu n'as pas le droit d'envoyer cette commande :smile:`
